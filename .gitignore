@@ -1,0 +1,9 @@
+#intermediary files
+/data/processed
+/data/raw
+
+#zipfiles
+.zip
+
+# Jupyter Notebook
+.ipynb_checkpoints

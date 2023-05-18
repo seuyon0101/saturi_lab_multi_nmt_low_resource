@@ -1,3 +1,7 @@
+import os
+path = os.getenv('HOME')
+print(path)
+
 if __name__ == '__main__' :
 
 	import pandas as pd
