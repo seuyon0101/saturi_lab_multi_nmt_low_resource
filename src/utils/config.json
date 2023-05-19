@@ -1,0 +1,18 @@
+
+{"model": {
+    "model_name":"Vanilla_Transformer",
+    "n_layers":6,
+    "d_model":512,
+    "n_heads":8,
+    "d_ff":2048,
+    "src_vocab_size":16009,
+    "tgt_vocab_size":16009,
+    "pos_len": 512,
+    "dropout":0.2,
+    "shared": true,
+    "warmups" : 40000,
+    "epochs": 20,
+    "optimizer" :"ADAM",
+    "loss" : "SparseCategoricalCrossentropy",
+    "metric" : "bleu"}
+}
