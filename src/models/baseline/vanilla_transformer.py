@@ -182,7 +182,7 @@ class DecoderLayer(tf.keras.layers.Layer):
         # Masked Multi-Head Attention
         residual = x
         out = self.norm_1(x)
-        #out, dec_attn = self.dec_self_attn(out, out, out, causality_mask)
+        # out, dec_attn = self.dec_self_attn(out, out, out, causality_mask)
         out, dec_attn = self.dec_self_attn(out, out, out, padding_mask)
         out = self.do(out)
         out += residual
