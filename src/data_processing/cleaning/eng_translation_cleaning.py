@@ -1,7 +1,3 @@
-import os
-path = os.getenv('HOME')
-print(path)
-
 if __name__ == '__main__' :
 
 	import pandas as pd
@@ -9,11 +5,13 @@ if __name__ == '__main__' :
 	import re
 	from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 	from torch.utils.data import DataLoader
+	import os
 
 	# load data
-
-	df = pd.read_csv('dataset_full_v1.csv') # data found on google drive 'raw' directory
-
+	os.environ['HOME'] = os.getenv('HOME') + '/saturi_lab_multi_nmt_low_resource'
+	dirpath = os.getenv('HOME') + '/data/raw'
+	df = pd.read_csv(dirpath + '/dataset_full_v1.csv') # data found on google drive 'raw' directory
+	
 	#data cleaning
 
 	df['text']=df['text'].apply(lambda x : re.sub('[\(\)]','',str(x))) # remove parenthesis
@@ -53,6 +51,10 @@ if __name__ == '__main__' :
 	dataloader = DataLoader(text,  batch_size=512)
     
     #save translations
+	print('input translation text file name :')
+	print('----------------------------------')
+	data_processed_path = path  + '/data/processed/'
+	translation_file = data_processed_path + input() # translation file name
 	outputs = []
 	for n,i in enumerate(tqdm.tqdm(dataloader)) :
 	    inputs = tokenizer(i, return_tensors="pt", padding=True).input_ids
@@ -62,16 +64,19 @@ if __name__ == '__main__' :
 	        outputs.append(result)
 	    
 	    if n % 100 == 0 : #save every 100th batch
-	        with open('translated.txt','w') as f :
+	        with open(translation_file,'w') as f :
 	            for sen in outputs :
 	                f.write(sen+'\n')
    
     # save all remaining outputs                 
-	with open('translated.txt','r') as f :
+	with open(translation_file,'r') as f :
         raw = f.read().splitlines()
 
     #add translated english list as new column
 	clean_df['eng'] = raw
     
     # export to csv
-	clean_df.to_csv('translated_train_data.csv')
+	print('input translated data file name :')
+	translated_train_data = data_processed_path+input() #file name for translated trained data
+
+	clean_df.to_csv(f'{translated_train_data}.csv')
