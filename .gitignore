@@ -1,9 +1,15 @@
 #intermediary files
 /data/processed
 /data/raw
+/saved_models/tokenizer/old
+.cache/
+.keras/
 
 #zipfiles
 .zip
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+#pycache
+__pycache__
